@@ -26,7 +26,7 @@ const readline = require('readline');
 readline.emitKeypressEvents(process.stdin);
 
 import { findCursorError } from './src/findError.controller'
-
+let Position: number[] = [NaN, NaN]
 
 const sheet = [
   [1, 1, 0, 1, 0, 0, 1],
@@ -39,8 +39,6 @@ const sheet = [
   [1, 1, 0, 0, 1, 0, 0],
 ];
 
-
-
 console.log('press `enter` key to find the cursor error.');
 process.stdin.on('keypress', (_str, key) => {
   if (key.name !== 'enter') {
@@ -48,8 +46,11 @@ process.stdin.on('keypress', (_str, key) => {
     return;
   }
   
-  const { row, col } = findCursorError(sheet);
+  const { row, col } = findCursorError(sheet, Position);
 
   console.log(`error at row:${row + 1}, col: ${col + 1}`);
   console.log('press `enter` key to find the next cursor error.');
+
+  Position[0] = row
+  Position[1] = col + 1
 });

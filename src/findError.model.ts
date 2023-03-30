@@ -1,9 +1,11 @@
 export class Model {
-  private Row: number = 0
-  private Col: number = 0
-
   private ErrorRow: number = 0
   private ErrorCol: number = 0
+
+  constructor(Row: number, Col: number) {
+    this.ErrorRow = Row
+    this.ErrorCol = Col
+  }
 
   checkError(input: number) {
     let checkStatus: boolean = true
@@ -17,14 +19,6 @@ export class Model {
     return checkStatus
   }
 
-  setRow(Row: number) {
-    this.Row = Row
-  }
-
-  setCol(Col: number) {
-    this.Col = Col
-  }
-
   setErrorRow(Row: number) {
     this.ErrorRow = Row
   }
@@ -33,11 +27,7 @@ export class Model {
     this.ErrorCol = Col
   }
 
-  sendPosition(): number[] {
-    return [this.Row, this.Col]
-  }
-
-  sendErrorPosition(): number [] {
+  ErrorPosition(): number [] {
     return [this.ErrorRow, this.ErrorCol]
   }
 }

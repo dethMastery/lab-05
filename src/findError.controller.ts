@@ -1,6 +1,9 @@
 import { Model } from "./findError.model";
 
-interface ErrorPosition {
+let Row: number = 0
+let Col: number = 0
+
+export interface ErrorPosition {
   row: number,
   col: number
 }
@@ -17,18 +20,29 @@ class Controller {
     this.Sheet = Sheet
   }
 
-  runCheck() {
-    let Position = this.Model.sendPosition()
+  runCheck(Position: any[]) {
+    if (isNaN(Position[0])) {
+      Position[0] = 0
+      Position[1] = 0
+    }
 
-    this.Col = Position[1]
     this.Row = Position[0]
+    this.Col = Position[1]
 
-    for (this.Col; this.Col < this.Sheet[this.Row].length; this.Col++) {
+    console.log(Position);
+    console.log(this.Col);
+    console.log(this.Sheet[this.Row].length);
+
+    let Index = this.Col
+
+    for (Index; Index < this.Sheet[this.Row].length; Index++) {
+      console.log(Index);
+      
       let Status = this.Model.checkError(this.Sheet[this.Row][this.Col])
 
-      if (this.Col >= 7) {
-        this.Model.setRow(this.Row + 1)
-        this.Model.setCol(0)
+      if (Index == 7) {
+        this.Model.setErrorRow(this.Row + 1)
+        this.Model.setErrorCol(0)
       }
 
       if (!Status) {
@@ -37,15 +51,20 @@ class Controller {
 
         break;
       }
+
+      this.Col++
     }
+
+    return this.Model.ErrorPosition()
   }
 }
 
-export function findCursorError(sheet: number[][]): ErrorPosition {
-  let InputModel: Model = new Model
-  let Position: Controller = new Controller(InputModel, sheet)
+let InputModel: Model = new Model(Row, Col)
 
-  Position.runCheck()
+export function findCursorError(sheet: number[][], Position: number[]): ErrorPosition {
+  let Scanning: Controller = new Controller(InputModel, sheet)
 
-  return {row: InputModel.sendErrorPosition()[0] , col: InputModel.sendErrorPosition()[1]}
+  Scanning.runCheck(Position)
+
+  return {row: InputModel.ErrorPosition()[0] , col: InputModel.ErrorPosition()[1]}
 }
