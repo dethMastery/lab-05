@@ -2,12 +2,14 @@
   "name": "lab",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "_dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node _dist/app.js",
+    "build": "tsc",
+    "dev": "tsc && node _dist/app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "dethz",
   "license": "ISC",
   "dependencies": {
     "@types/node": "^18.15.11"
