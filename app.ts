@@ -25,7 +25,8 @@
 const readline = require('readline');
 readline.emitKeypressEvents(process.stdin);
 
-import { findCursorError } from "./src/findCursor";
+import { findCursorError } from './src/findError.controller'
+
 
 const sheet = [
   [1, 1, 0, 1, 0, 0, 1],
@@ -46,6 +47,7 @@ process.stdin.on('keypress', (_str, key) => {
     console.log('please press `enter` key to find the error.');
     return;
   }
+  
   const { row, col } = findCursorError(sheet);
 
   console.log(`error at row:${row + 1}, col: ${col + 1}`);
