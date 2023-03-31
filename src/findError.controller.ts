@@ -29,30 +29,33 @@ class Controller {
     this.Row = Position[0]
     this.Col = Position[1]
 
-    console.log(Position);
-    console.log(this.Col);
-    console.log(this.Sheet[this.Row].length);
+    let Index: number = (this.Row * 7 ) + this.Col
+    let MergingData: number[] = []
+    let i: number = 0
 
-    let Index = this.Col
+    this.Sheet.forEach(sheetRow => {
+      sheetRow.forEach(sheetCol => {
+        MergingData.push(sheetCol)
+      })
+      i++
+    })
 
-    for (Index; Index < this.Sheet[this.Row].length; Index++) {
-      console.log(Index);
-      
-      let Status = this.Model.checkError(this.Sheet[this.Row][this.Col])
-
-      if (Index == 7) {
-        this.Model.setErrorRow(this.Row + 1)
-        this.Model.setErrorCol(0)
-      }
+    for (Index; Index < MergingData.length; Index++) {
+      let Status = this.Model.checkError(MergingData[Index])
 
       if (!Status) {
-        this.Model.setErrorRow(this.Row)
-        this.Model.setErrorCol(this.Col)
+        console.log(Index);
+        console.log(Index / 7);
+        console.log(Math.floor(Index / 7));
+        console.log(Index % 7);
+        
+        
+        
+        this.Model.setErrorRow(Math.floor(Index / 7))
+        this.Model.setErrorCol(Index % 7)
 
         break;
       }
-
-      this.Col++
     }
 
     return this.Model.ErrorPosition()

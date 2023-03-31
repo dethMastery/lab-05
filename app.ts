@@ -48,8 +48,15 @@ process.stdin.on('keypress', (_str, key) => {
   
   const { row, col } = findCursorError(sheet, Position);
 
-  console.log(`error at row:${row + 1}, col: ${col + 1}`);
-  console.log('press `enter` key to find the next cursor error.');
+  if (((row + 1) * (col + 1)) == sheet.length * sheet[0].length) {
+    console.log(`error at row:${row + 1}, col: ${col + 1}`);
+    console.log(`End Of Array :)`);
+    
+    process.exit()
+  } else {
+    console.log(`error at row:${row + 1}, col: ${col + 1}`);
+    console.log('press `enter` key to find the next cursor error.');
+  }
 
   Position[0] = row
   Position[1] = col + 1
